@@ -10,7 +10,7 @@ const useAuth = () => {
   const login = (email: string, password: string) =>
     auth.signInWithEmailAndPassword(email, password);
 
-  const signUp = (email: string, password: string) =>
+  const register = (email: string, password: string) =>
     auth.createUserWithEmailAndPassword(email, password);
 
   const sendVerification = () => user?.sendEmailVerification();
@@ -37,7 +37,7 @@ const useAuth = () => {
     isLogin,
     logout,
     login,
-    signUp,
+    register,
     sendVerification,
     sendPasswordMail
   };

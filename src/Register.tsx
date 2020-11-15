@@ -4,23 +4,20 @@ import styled from "styled-components";
 import { useAppContext } from "./AppContextProvider";
 import useAuth from "./useAuth";
 import LoadingHelper from "./LoadingHelper";
-import { useLocation, useHistory, Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-function Login(props) {
+function Register(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const context = useAppContext();
-  const location = useLocation<{ from: string }>();
+  const { register } = useAuth();
   const history = useHistory();
-  const { login } = useAuth();
-  const handleForget = () => context?.setIsPwPopupVisible(true);
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      await login(email, password);
-      history.push(location.state?.from ?? "/");
+      await register(email, password);
+      history.push("/");
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -29,7 +26,7 @@ function Login(props) {
   };
   const loadingBtn = (
     <Button variant="primary">
-      登入
+      註冊
       <span className="mr-2"></span>
       <LoadingHelper />
     </Button>
@@ -37,7 +34,7 @@ function Login(props) {
   return (
     <div className="container" {...props}>
       <div>
-        <Link to="/register">{"> 註冊"}</Link>
+        <Link to="/login">{"< 回登入"}</Link>
         <Card style={{ width: "350px", padding: "15px" }}>
           <Form onSubmit={onSubmit}>
             <Form.Group controlId="formBasicEmail">
@@ -61,13 +58,9 @@ function Login(props) {
               loadingBtn
             ) : (
               <Button variant="primary" type="submit">
-                登入
+                註冊
               </Button>
             )}
-
-            <span className="mr-2"></span>
-            <Button onClick={handleForget}>忘記密碼</Button>
-            <span className="mr-2"></span>
           </Form>
         </Card>
       </div>
@@ -75,7 +68,7 @@ function Login(props) {
   );
 }
 
-export default styled(Login)`
+export default styled(Register)`
   display: flex;
   justify-content: center;
   align-items: center;

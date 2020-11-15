@@ -32,6 +32,7 @@ export default function ForgetPassword() {
     } catch (err) {
       alert(err.message);
       console.log(err.code);
+      setIsLoading(false);
     }
   };
   const loadingBtn = (
