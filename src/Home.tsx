@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Card, Form, Button } from "react-bootstrap";
+import { useAppContext } from "./AppContextProvider";
 import { auth } from "./firebase";
 import useAuth from "./useAuth";
 
@@ -10,7 +11,7 @@ export default function Home() {
     <div className="container">
       {user?.email}
       <br />
-      <Button onClick={onLogout}>Logout</Button>
+      <Button onClick={onLogout}>登出</Button>
       {!user?.emailVerified && (
         <Button onClick={sendVerification}>發驗證信</Button>
       )}

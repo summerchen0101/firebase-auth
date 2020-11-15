@@ -6,11 +6,17 @@ const useAuth = () => {
   const [user, setUser] = useState<firebase.User | null>();
   const [isLogin, setIsLogin] = useState(false);
   const logout = () => auth.signOut();
+
   const login = (email: string, password: string) =>
     auth.signInWithEmailAndPassword(email, password);
+
   const signUp = (email: string, password: string) =>
     auth.createUserWithEmailAndPassword(email, password);
+
   const sendVerification = () => user?.sendEmailVerification();
+
+  const sendPasswordMail = (email: string) =>
+    auth.sendPasswordResetEmail(email);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((userData) => {
@@ -32,7 +38,8 @@ const useAuth = () => {
     logout,
     login,
     signUp,
-    sendVerification
+    sendVerification,
+    sendPasswordMail
   };
 };
 
