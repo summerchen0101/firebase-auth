@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Card, Form, Button, Spinner } from "react-bootstrap";
+import { Button, Card, Form, Spinner } from "react-bootstrap";
+import styled from "styled-components";
 import { useAppContext } from "./AppContextProvider";
-import { auth } from "./firebase";
 import useAuth from "./useAuth";
+import LoadingHelper from "./LoadingHelper";
 
-function Login() {
+function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -21,8 +22,15 @@ function Login() {
       console.log(err);
     }
   };
+  const loadingBtn = (
+    <Button variant="primary">
+      登入
+      <span className="mr-2"></span>
+      <LoadingHelper />
+    </Button>
+  );
   return (
-    <div className="container">
+    <div className="container" {...props}>
       <Card style={{ width: "350px", padding: "15px" }}>
         <Form onSubmit={onSubmit}>
           <Form.Group controlId="formBasicEmail">
@@ -42,21 +50,14 @@ function Login() {
               onBlur={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-          <Button variant="primary" type="submit" disabled={isLoading}>
-            登入
-            {isLoading && (
-              <>
-                <span className="mr-2"></span>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              </>
-            )}
-          </Button>
+          {isLoading ? (
+            loadingBtn
+          ) : (
+            <Button variant="primary" type="submit">
+              登入
+            </Button>
+          )}
+
           <span className="mr-2"></span>
           <Button onClick={handleForget}>忘記密碼</Button>
         </Form>
@@ -65,4 +66,9 @@ function Login() {
   );
 }
 
-export default Login;
+export default styled(Login)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
