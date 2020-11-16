@@ -13,7 +13,7 @@ function Login(props) {
   const context = useAppContext();
   const location = useLocation<{ from: string }>();
   const history = useHistory();
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const handleForget = () => context?.setIsPwPopupVisible(true);
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +34,10 @@ function Login(props) {
       <LoadingHelper />
     </Button>
   );
+  const onGoogleLogin = async () => {
+    await loginWithGoogle();
+  };
+
   return (
     <div className="container" {...props}>
       <div>
@@ -67,6 +71,10 @@ function Login(props) {
 
             <span className="mr-2"></span>
             <Button onClick={handleForget}>忘記密碼</Button>
+            <span className="mr-2"></span>
+            <Button onClick={onGoogleLogin} variant="danger">
+              Google 登入
+            </Button>
             <span className="mr-2"></span>
           </Form>
         </Card>

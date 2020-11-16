@@ -1,5 +1,8 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+export const provider = new firebase.auth.GoogleAuthProvider();
+provider.addScope("profile");
+provider.addScope("email");
 const config = {
   apiKey: "AIzaSyBhyKn2xUSuwE10-xYZTWVmO0zwyGVKw1Y",
   authDomain: "auth-development-8785b.firebaseapp.com",

@@ -15,6 +15,7 @@ import {
 
 export default function App() {
   const { isLogin, user } = useAuth();
+  console.log(isLogin, user);
   return (
     <AppContextProvider>
       <Router>
